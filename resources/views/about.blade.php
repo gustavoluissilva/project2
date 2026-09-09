@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="About">
 
         <h1> primeira view </h1>
 

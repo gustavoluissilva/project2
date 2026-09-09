@@ -1,11 +1,11 @@
-<x-layout>
+<x-layout title="Contact">
 
     <h1>contact </h1>
 
-        <div>
+        <x-card>
 
            <p>place holder for the contact form</p>
-        </div>
+        </x-card>
 
 
 </x-layout>
