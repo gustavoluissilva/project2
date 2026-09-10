@@ -19,9 +19,12 @@ Route::view('/contact', 'contact');
 Route::view('/about', 'about');
 
 route::get('/', function(){
-    return view('welcome',[
+    $ideas = session()->get('ideas',[]);
+
+    return view('ideas',[
         'greeting' => 'Hello,',
         'person' => request('person', 'Laracasts'),
+        'ideas'=> $ideas
 
         // 'tasks' =>[
         //     'market',
@@ -31,4 +34,19 @@ route::get('/', function(){
 
     ]);
 
+});
+
+route::post('/ideas', function(){
+    $idea = request('idea');
+    session()->push('ideas', $idea);
+
+    return redirect('/');
+});
+
+
+//temporary
+route::get('/delete-ideas', function(){
+session()->forget('ideas');
+
+return redirect('/');
 });

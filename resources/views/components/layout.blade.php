@@ -8,30 +8,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{{ $title }}</title>
-        <style>
-
-          .card{
-                background: #e3e3e3;
-                padding: 1rem;
-                text-align:center;
-                max-width: 400px;
-                margin:auto;
-            }
-        </style>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     </head>
-    <body>
-         <nav>
-            
+    <body class="bg-gray-700 p-6 max-w-xl mx-auto">
+         {{-- <nav>
+
             <a href="/">Home</a>
             <a href="/about">About us</a>
             <a href="/contact">Contact us</a>
 
-        </nav>
+        </nav> --}}
         <main>
 
             {{ $slot }}
 
         </main>
 
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     </body>
     </html>
