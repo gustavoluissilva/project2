@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Container\Attributes\DB as AttributesDB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Models\Idea;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -18,35 +21,55 @@ use Illuminate\Support\Facades\Route;
 Route::view('/contact', 'contact');
 Route::view('/about', 'about');
 
-route::get('/', function(){
-    $ideas = session()->get('ideas',[]);
+Route::get('/', function () {
+    // $ideas = session()->get('ideas',[]);
 
-    return view('ideas',[
-        'greeting' => 'Hello,',
-        'person' => request('person', 'Laracasts'),
-        'ideas'=> $ideas
+    // passando pelo bd agora
+    // $ideas = DB:: table('ideas')->get();
+    //pegando apenas state prending
+    // $ideas = Idea::where('state', 'pending')->get();
 
-        // 'tasks' =>[
-        //     'market',
-        //     'walk the dog',
-        //     'whatch the video tutorial'
-        // ]
+    $ideas = Idea::query() -> when(request('state'),function($query,$state){
+        // dd($state);
 
+        $query->where('state',$state);
+
+    })->get();
+
+
+
+    // return view('ideas',[
+    //     'greeting' => 'Hello,',
+    //     'person' => request('person', 'Laracasts'),
+    //     'ideas'=> $ideas
+
+    // 'tasks' =>[
+    //     'market',
+    //     'walk the dog',
+    //     'whatch the video tutorial'
+    // ]
+
+    // ]);
+    return view('ideas', [
+        'ideas' => $ideas,
     ]);
-
 });
 
-route::post('/ideas', function(){
-    $idea = request('idea');
-    session()->push('ideas', $idea);
+Route::post('/ideas', function () {
+    // session()->push('ideas', $idea);
+
+    Idea::create([
+        'description' => request('idea'),
+        'state' => 'pending',
+    ]);
 
     return redirect('/');
 });
 
 
 //temporary
-route::get('/delete-ideas', function(){
-session()->forget('ideas');
+route::get('/delete-ideas', function () {
+    session()->forget('ideas');
 
-return redirect('/');
+    return redirect('/');
 });
