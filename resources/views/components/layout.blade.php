@@ -19,7 +19,7 @@
             <a href="/contact">Contact us</a>
 
         </nav> --}}
-        <main>
+        <main class="text-white">
 
             {{ $slot }}
 

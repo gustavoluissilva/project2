@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IdeaController;
 use Illuminate\Container\Attributes\DB as AttributesDB;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,16 @@ use App\Models\Idea;
 
 Route::view('/contact', 'contact');
 Route::view('/about', 'about');
+Route::get('/ideas',[IdeaController::class,'index']);
+Route::get('/ideas/create',[IdeaController::class,'create']);
+Route::get('/ideas/{idea}',[IdeaController::class,'show']);
+Route::get('/ideas/{idea}/edit', [IdeaController::class,'edit']);
+Route::patch('/ideas/{idea}/',[IdeaController::class,'update']);
+Route::post('/ideas',[IdeaController::class,'store']);
+Route::delete('/ideas/{idea}', [IdeaController::class,'destroy']);
 
-Route::get('/ideas', function () {
 
-$ideas = Idea::all();
-    // $ideas = session()->get('ideas',[]);
+ // $ideas = session()->get('ideas',[]);
 
     // passando pelo bd agora
     // $ideas = DB:: table('ideas')->get();
@@ -53,57 +59,3 @@ $ideas = Idea::all();
     // ]
 
     // ]);
-    return view('ideas.index', [
-        'ideas' => $ideas,
-    ]);
-});
-
-Route::get('/ideas/{idea}',function(Idea $idea){
-
-return view('ideas.show',[
-    'idea'=>$idea,
-]);
-
-
-});
-
-//edit
-Route::get('/ideas/{idea}/edit', function(Idea $idea){
-
-
-    return view('ideas.edit',[
-        'idea'=>$idea,
-
-    ]);
-});
-
-//update
-Route::patch('/ideas/{idea}/', function(Idea $idea){
-$idea->update([
-'description' => request('description'),
-]);
-return redirect("ideas/{$idea->id}");
-});
-
-//store
-Route::post('/ideas', function () {
-    // session()->push('ideas', $idea);
-
-    Idea::create([
-        'description' => request('description'),
-        'state' => 'pending',
-    ]);
-
-    return redirect('/ideas');
-});
-
-//destroy
-Route::delete('/ideas/{idea}', function (Idea $idea) {
-
-   $idea -> delete();
-
-    return redirect('/ideas');
-});
-
-
-
