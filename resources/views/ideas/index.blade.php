@@ -39,8 +39,8 @@
 
     <form method="POST" action="/ideas" class="max-w-sm mx-auto p-4 bg-gray-900 rounded-lg shadow">
         @csrf
-        <label for="idea" class="block mb-2 text-sm font-medium text-white">New Idea</label>
-        <textarea id="idea" name="idea" rows="4"
+        <label for="description" class="block mb-2 text-sm font-medium text-white">New Idea</label>
+        <textarea id="description" name="description" rows="4"
             class="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
             placeholder="Have an idea you want to save for later?"></textarea>
 
@@ -55,7 +55,7 @@
             <h2 class="font-bold">Your ideas</h2>
             <ul class="mt-6">
                 @foreach ($ideas as $idea)
-                    <li class="text-sm">{{ $idea->description }}</li>
+                    <a href="/ideas/{{ $idea->id }}" class="text-sm">{{ $idea->description }}</a>
                 @endforeach
             </ul>
         </div>
